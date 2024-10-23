@@ -21,11 +21,13 @@ shutter_speed_ms = 0
 shutter_start = 0
 # lux = 0
 
+
 def read_voltage():
     global adc
     val = adc.read_u16()
     val = val * (3.3 / 65535)
     return val
+
 
 def update_display(timer):
     global counter
@@ -49,6 +51,7 @@ def update_display(timer):
 
     # led.toggle()
 
+
 def shutter_timer_handler(timer):
     global shutter_open
     global shutter_speed_timer_ms
@@ -58,10 +61,12 @@ def shutter_timer_handler(timer):
     else:
         del timer
 
+
 def led_toggle(timer):
     global led
 
     led.toggle()
+
 
 def read_lux(timer):
     global light_sensor
@@ -69,7 +74,7 @@ def read_lux(timer):
 
     lux = light_sensor.luminance(BH1750.CONT_HIRES_1)
     sleep_ms(120)
-    
+
 
 def main_loop():
     global voltage
@@ -91,9 +96,10 @@ def main_loop():
             shutter_open = False
             shutter_speed_ms = (time_ns() - shutter_start) // 1_000_000
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     display_timer = Timer(mode=Timer.PERIODIC, period=1000, callback=update_display)
     led_timer = Timer(mode=Timer.PERIODIC, period=100, callback=led_toggle)
     # light_sensor_timer = Timer(mode=Timer.PERIODIC, period=2000, callback=read_lux)
     main_loop()
-    #_thread.start_new_thread(main_loop, ())
+    # _thread.start_new_thread(main_loop, ())
