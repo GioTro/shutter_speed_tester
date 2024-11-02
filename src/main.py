@@ -1,4 +1,3 @@
-import logger
 from machine import I2C, Pin, ADC, Timer
 from time import sleep_ms, time_ns
 from ssd1306 import SSD1306_I2C
